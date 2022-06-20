@@ -1,0 +1,48 @@
+{% load static %}
+<style>
+    #main-nav{
+        min-height: calc(100vh - 50px);
+    }
+</style>
+<div class="position-sticky pt-3">
+    <ul id="main-nav" class="nav flex-column">
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'Dashboard' %}">
+                <span data-feather="home" class="align-text-bottom"></span>
+                Dashboard
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'couriers_list' %}">
+                <span data-feather="home" class="align-text-bottom"></span>
+                Couriers List
+            </a>
+        </li>
+        {% if request.user.is_authenticated %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'main_app:package-list' %}">
+                    <span data-feather="shopping-cart" class="align-text-bottom"></span>
+                    Packages
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'main_app:courier-list' %}">
+                    <span data-feather="file" class="align-text-bottom"></span>
+                    Couriers
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'main_app:client-list' %}">
+                    <span data-feather="users" class="align-text-bottom"></span>
+                    Clients
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'main_app:cstatus-list' %}">
+                    <span data-feather="bar-chart-2" class="align-text-bottom"></span>
+                    Statuses
+                </a>
+            </li>
+        {% endif %}
+    </ul>
+</div>

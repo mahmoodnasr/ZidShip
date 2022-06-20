@@ -1,0 +1,64 @@
+{% load static %}
+{% block script %}
+    <script src="{% static 'js/chart.min.js' %}"></script>
+    <script>
+        $(function () {
+            const labels = {{ labels | safe }};
+            const colors = ["#212529", "#198754", "#ffc107", "#adb5bd", "#6c757d","#dc3545","#0d6efd","#0dcaf0"];
+            const data = {
+                labels: labels,
+                datasets: [{
+                    label: '# packages',
+                    data: {{ values | safe }},
+                    backgroundColor: colors,
+                    borderColor: colors,
+                    borderWidth: 1
+                }]
+            };
+            let ctx = document.getElementById("Packages").getContext("2d");
+            let chart = new Chart(ctx, {
+                type: 'bar',
+                data: data,
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+
+                        },
+                    },
+                    onClick: (c, i) => {
+                        const legend = c.chart.config._config.data.labels[i[0].index]
+
+                        window.location.href = "{% url 'package_by_status' %}?status=" + legend;
+                    },
+                },
+            });
+        });
+    </script>
+{% endblock %}
+<style>
+    .underline {
+        text-decoration: underline;
+        font-weight: bold;
+    }
+
+    #AssignedTable {
+        min-height: 100%;
+    }
+
+    #chartBody {
+        min-height: 500px;
+        max-height: 600px !important;
+        overflow-y: scroll;
+    }
+</style>
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Dashboard</h1>
+</div>
+<canvas class="my-4 w-100" width="900" height="250" id="Packages"></canvas>

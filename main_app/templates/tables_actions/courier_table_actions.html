@@ -1,0 +1,17 @@
+{% load static %}
+<div class="btn-group">
+    <span type="button" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+        <span class='fa fa-cog link'></span>
+    </span>
+    <ul class="dropdown-menu">
+        <li><span class="dropdown-item link" onclick="courierWaybill('{{ record.pk }}')">Waybill</span></li>
+    </ul>
+</div>
+{% block script %}
+    <script type="text/javascript">
+        function courierWaybill(id) {
+            window.location.href = "{% url 'couriers_waybill' id=12345 %}".replace(/12345/, id.toString());
+        }
+    </script>
+
+{% endblock %}
